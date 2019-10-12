@@ -10,22 +10,22 @@ Los componentes de ZF3 sobre los que discutiremos en este capítulo son:
 |--------------------------------|---------------------------------------------------------------|
 | *Componente*                   | *Descripción*                                                 |
 |--------------------------------|---------------------------------------------------------------|
-| `Zend\Mvc`                     | Soporte para el patrón MVC. Implementa las clases de tipo     |
+| @`Zend\Mvc`                    | Soporte para el patrón MVC. Implementa las clases de tipo     |
 |                                | controlador básicas, complementos para los controladores      |
 |                                | (controller plugins), etc.                                    |
 |--------------------------------|---------------------------------------------------------------|
-| `Zend\View`                    | Implementa la funcionalidad para los contenedores de          |
+| @`Zend\View`                   | Implementa la funcionalidad para los contenedores de          |
 |                                | variables (variable containers), la impresión de una página   |
 |                                | web y ayudantes de vista comunes (view helpers).              |
 |--------------------------------|---------------------------------------------------------------|
-| `Zend\Http`                    | Implementa un envoltorio alrededor de las peticiones y        |
+| @`Zend\Http`                   | Implementa un envoltorio alrededor de las peticiones y        |
 |                                | respuestas HTTP.                                              |
 |--------------------------------|---------------------------------------------------------------|
 
-## Obtener el Ejemplo Hello World del GitHub
+## Obtener el Ejemplo Hello World de GitHub
 
 En este y en los capítulos siguiente proveeremos código fuente de ejemplo que podremos
-ejecutar nosotros mismos. Podría ser díficil para un principiante escribir código
+ejecutar nosotros mismos. Podría ser difícil para un principiante escribir código
 sin errores. Si estamos atascados o no entendemos porque nuestro código no funciona
 podemos descargar la aplicación *Hello World* completa desde GitHub. Las líneas de
 código de ejemplo de este capítulo son en su mayor parte de esta aplicación.
@@ -47,7 +47,7 @@ completo del ejemplo *Hello World*:
      ...
 ~~~
 
-Hello World es un sitio web completo que se puede instalar en nuestra computadora.
+*Hello World* es un sitio web completo que se puede instalar en nuestra computadora.
 Para instalar el ejemplo podemos editar el sitio virtual de Apache que está
 por defecto o crear un nuevo archivo. Después de editar el archivo reiniciamos
 el servidor Apache HTTP y abrimos el sitio web desde nuestro navegador web.
@@ -55,16 +55,16 @@ el servidor Apache HTTP y abrimos el sitio web desde nuestro navegador web.
 ## Separar la Lógica del Negocio de la Presentación
 
 Un sitio web típico tiene tres tipos de funcionalidad: el código que implementa
-la lógica del negocio, el código que implementa la interación con el usuario y el
+la lógica del negocio, el código que implementa la interacción con el usuario y el
 código que imprime páginas HTML (presentación). Antes de los frameworks de PHP los
 programadores usualmente mezclaban estos tres tipos de código en un solo gran
 archivo PHP que lo hace doloroso de probar y mantener, especialmente cuando escribimos
 un sitio web grande.
 
 Con el tiempo PHP se convirtió en un lenguaje orientado a objeto y ahora podemos
-organizar el código dentro de clases. El patrón *Modelo-Vista-Conatrolador* (MVC)
-es un conjunto consejos que te dicen como organizar el código de una mejor manera
-para hacerlo fácil de mantener.
+organizar el código dentro de clases. El patrón *Modelo-Vista-Controlador* (MVC)
+es un conjunto de consejos que nos dicen como organizar el código de una mejor manera
+para hacer al código fácil de mantener.
 
 En MVC las clases que implementan la lógica del negocio se llaman *modelos*, los
 retazos de código (code snippets) HTML se llaman *vistas* y las clases responsables
@@ -75,19 +75,19 @@ I> de esto es que las vistas son generalmente muy simples y contienen solo una
 I> mezcla de código HTML y código PHP en línea.
 
 El principal objetivo del concepto MVC es separar la lógica de negocio (modelos)
-de su visualización (vistas). A esto tambíen se llama *separación de conceptos*,
-cuando cada capa hace solo su tarea específica.
+de su visualización (vistas). A esto también se llama *separación de conceptos*,
+cada capa hace solo su tarea específica.
 
 Al separar nuestro modelo de las vistas reducimos el número de dependencias entre
-ellos. En consecuencia un cambio hecho en una de las capas tiene un impacto posible
-muy bajo sobre las otras. Esta separación además mejora la reusabilidad del código.
+ellos. En consecuencia un cambio hecho en una de las capas tiene pocas posibilidades
+de afectar a las otras. Además, la separación mejora la reusabilidad del código.
 Por ejemplo, podemos crear varias representaciones visuales para los mismos modelos
 (temas cambiables).
 
 Para entender mejor como funciona esto recordemos que cualquier sitio web solo es
 un programa PHP que recibe una petición HTTP desde el servidor web y produce una
 repuesta HTTP. En la Figura 4.2 se muestra como una petición HTTP es procesada por
-una aplicación MVC y como la respuesta se genera:
+una aplicación MVC y como se genera la respuesta:
 
 ![Figura 4.2. Procesamiento de una petición HTTP en una aplicación web MVC](../en/images/mvc/model-view-controller.png)
 
@@ -97,23 +97,23 @@ una aplicación MVC y como la respuesta se genera:
 
 * El servidor web con el motor de PHP ejecuta el script de entrada *index.php*.
   La única cosa que hace el script de entrada es crear una instancia de la clase
-  `Zend\Mvc\Application`.
+  @`Zend\Mvc\Application`.
 
-* La aplicación usa el componente *router* para asociar la URL y determinar a que
-  controlador pasar la petición. Si coincide una ruta el controlador es instanciado
+* La aplicación usa el componente *router* para analizar la URL y determinar a que
+  controlador pasar la petición. Si una ruta coincide el controlador es instanciado
   y se llama al *método de acción* apropiado.
 
-* En el método de acción del controlador los parámetro son recuperados de las variables
-  GET y POST. Para procesar los datos entrantes el controlador instancia las clases
+* En el método de acción del controlador los parámetro son recuperados desde las variables
+  GET y POST. Para procesar los datos entrantes, el controlador instancia las clases
   de modelo apropiadas y llama a sus métodos.
 
-* Las clases de modelo usa los algoritmos de la lógica de negocio para procesar los
+* Las clases de modelo usan los algoritmos de la lógica de negocio para procesar los
   datos de entrada y regresar los datos de salida. Los algoritmos de la lógica de
-  negocios son específicos de nuestra aplicación y típicamente incluye recuperar
-  datos de la base de datos, manejar archivos, interactuar con sistemas externos,
-  etc.
+  negocios son específicos de nuestra aplicación y típicamente incluye la recuperación
+  de los datos de la base de datos, el manejo de archivos y la interacción 
+  con sistemas externos, etc.
 
-* Lo que resulta de llamar a los modelos se pasa al script de vista correspondiente
+* Lo que resulta de la llamada a los modelos se pasa al script de vista correspondiente
   para imprimir la página HTML.
 
 * El script de vista usa los datos que provee el modelo para imprimir la página HTML.
@@ -132,13 +132,13 @@ más detalle.
 ## Los Controladores
 
 Una controlador provee comunicación entre la aplicación, los modelos y las vistas.
-El controlador trae las entradas desde la petición HTTP y usa los modelos y la
-correspondiente vista para producir la respuesta HTTP necesaria.
+El controlador trae las entradas desde la petición HTTP y usa los modelos y las
+vistas correspondientes para producir una respuesta HTTP.
 
 Los controladores que pertenecen a un módulo residen típicamente en la subcarpeta
 `Controller` del directorio fuente del módulo (se muestra en la figura 4.3).
 
-![Figura 4.3. Directorio Controlador](../en/images/mvc/controller_dir.png)
+![Figura 4.3. Carpeta Controller](../en/images/mvc/controller_dir.png)
 
 Zend Skeleton Application nos provee de una implementación por defecto de la clase
 `IndexController`. La clase `IndexController` es típicamente la clase controladora
@@ -166,7 +166,8 @@ En el ejemplo de arriba podemos ver que los controladores usualmente definen su
 propio namespace (línea 2). El controlador Index, como todos los otros controladores
 del módulo *Application*, están en el namespace `Application\Controller`.
 
-Un controlador es una clase PHP normal que se deriva de la clase base `AbstractAcionController`
+Un controlador es una clase PHP normal que se deriva de la clase base 
+@`AbstractActionController`[Zend\Mvc\Controller\AbstractActionController]
 (línea 7).
 
 Por defecto la clase controlador contiene un solo *método de acción* llamado
@@ -188,18 +189,18 @@ y posiblemente otras acciones.
 |------------------------------------|--------------------------------------------------|
 | *Método de Acción*                 | *Descripción*                                    |
 |------------------------------------|--------------------------------------------------|
-| `IndexController::indexAction()`   | La acción "index" muestra la página *Home* de    |
+| `IndexController::indexAction()`   | La acción «index» muestra la página *Home* de    |
 |                                    | nuestro sitio web.                               |
 |------------------------------------|--------------------------------------------------|
-| `IndexController::aboutAction()`   | La acción "about" muestra la página *Acerca de*  |
+| `IndexController::aboutAction()`   | La acción «about» muestra la página *Acerca de*  |
 |                                    | del sitio web. La página *Acerca de* contiene    |
 |                                    | información de contacto y de derechos de autor.  |
 |------------------------------------|--------------------------------------------------|
-| `IndexController::contactUsAction()`| La acción "contactUs" action muestra la página  |
+| `IndexController::contactUsAction()`| La acción «contactUs» muestra la página         |
 |                                     | *Contactanos* del sitio web. Esta página muestra|
 |                                     | el formulario para contactar a los autores del  |
 |                                     | sitio.                                          |
-|------------------------------------|--------------------------------------------------|
+|-------------------------------------|-------------------------------------------------|
 
 ### Clase Controladora Base
 
